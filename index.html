@@ -19,8 +19,8 @@
     position: absolute;
     top: 50px;
     right: 50px;
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
     background: radial-gradient(circle, #fff200, #ffdd00);
     border-radius: 50%;
     box-shadow: 0 0 60px #ffdd00, 0 0 120px #ffdd00;
@@ -36,16 +36,16 @@
   .cloud {
     position: absolute;
     background: white;
-    border-radius: 100%;
+    border-radius: 50%;
     opacity: 0.9;
   }
 
   .cloud1 {
-    width: 170px;
-    height: 90px;
-    top: 100px;
+    width: 120px;
+    height: 60px;
+    top: 80px;
     left: -150px;
-    animation: moveCloud 10s linear infinite;
+    animation: moveCloud 60s linear infinite;
   }
   .cloud1::before, .cloud1::after {
     content: '';
@@ -57,11 +57,11 @@
   .cloud1::after { width: 60px; height: 30px; top: 10px; left: 60px;}
 
   .cloud2 {
-    width: 170px;
-    height: 90px;
-    top: 250px;
-    left: -100px;
-    animation: moveCloud 10s linear infinite;
+    width: 100px;
+    height: 50px;
+    top: 150px;
+    left: -200px;
+    animation: moveCloud 90s linear infinite;
   }
   .cloud2::before, .cloud2::after {
     content: '';
@@ -224,16 +224,99 @@
 
   /* Ajustes responsivos (opcional) */
   @media (max-width: 1200px) {
-    .left-svg { width: min(100vw, 720px); }
+    .left-svg { width: min(72vw, 720px); }
   }
   @media (max-width: 992px) {
-    .left-svg { width: min(100vw, 680px); }
+    .left-svg { width: min(78vw, 680px); }
   }
   @media (max-width: 768px) {
-    .left-svg { width: min(100vw, 620px); }
+    .left-svg { width: min(85vw, 620px); }
+    .sun {
+      width: 70px;
+      height: 70px;
+      top: 30px;
+      right: 30px;
+    }
+    .house {
+      width: 140px;
+      height: 300px;
+      right: 30px;
+    }
+    .roof {
+      width: 250px;
+      height: 75px;
+      top: -55px;
+    }
+    .walls {
+      width: 220px;
+      height: 220px;
+    }
+    .walls::after {
+      width: 100px;
+      height: 125px;
+    }
+    .cloud1 {
+      width: 100px;
+      height: 50px;
+      top: 60px;
+    }
+    .cloud1::before { width: 65px; height: 32px; top: -16px; left: 17px; }
+    .cloud1::after { width: 50px; height: 25px; top: 8px; left: 50px; }
+    .cloud2 {
+      width: 80px;
+      height: 40px;
+      top: 120px;
+    }
+    .cloud2::before { width: 55px; height: 27px; top: -12px; left: 12px; }
+    .cloud2::after { width: 40px; height: 20px; top: 4px; left: 40px; }
   }
   @media (max-width: 576px) {
-    .left-svg { width: min(100vw, 560px); }
+    .left-svg { width: min(90vw, 560px); }
+    .sun {
+      width: 50px;
+      height: 50px;
+      top: 20px;
+      right: 20px;
+    }
+    .house {
+      width: 100px;
+      height: 220px;
+      right: 20px;
+    }
+    .roof {
+      width: 180px;
+      height: 55px;
+      top: -40px;
+    }
+    .walls {
+      width: 160px;
+      height: 160px;
+    }
+    .walls::after {
+      width: 70px;
+      height: 90px;
+    }
+    .cloud1 {
+      width: 80px;
+      height: 40px;
+      top: 40px;
+    }
+    .cloud1::before { width: 50px; height: 25px; top: -12px; left: 15px; }
+    .cloud1::after { width: 40px; height: 20px; top: 6px; left: 40px; }
+    .cloud2 {
+      width: 60px;
+      height: 30px;
+      top: 80px;
+    }
+    .cloud2::before { width: 40px; height: 20px; top: -9px; left: 10px; }
+    .cloud2::after { width: 30px; height: 15px; top: 3px; left: 30px; }
+    .ground {
+      height: 30px;
+    }
+    .left-svg {
+      bottom: 30px;
+      max-height: calc(100% - 30px);
+    }
   }
 
 </style>
@@ -259,3 +342,4 @@
 
 </body>
 </html>
+
