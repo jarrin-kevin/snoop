@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paisaje estilo Snoopy</title>
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    background: linear-gradient(to top, #87ceeb 0%, #cce7ff 100%);
+    font-family: sans-serif;
+  }
+
+  /* Sol animado */
+  .sun {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, #fff200, #ffdd00);
+    border-radius: 50%;
+    box-shadow: 0 0 60px #ffdd00, 0 0 120px #ffdd00;
+    animation: shine 3s ease-in-out infinite alternate;
+  }
+
+  @keyframes shine {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
+  }
+
+  /* Nubes caricaturescas */
+  .cloud {
+    position: absolute;
+    background: white;
+    border-radius: 100%;
+    opacity: 0.9;
+  }
+
+  .cloud1 {
+    width: 170px;
+    height: 90px;
+    top: 100px;
+    left: -150px;
+    animation: moveCloud 10s linear infinite;
+  }
+  .cloud1::before, .cloud1::after {
+    content: '';
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+  }
+  .cloud1::before { width: 80px; height: 40px; top: -20px; left: 20px;}
+  .cloud1::after { width: 60px; height: 30px; top: 10px; left: 60px;}
+
+  .cloud2 {
+    width: 170px;
+    height: 90px;
+    top: 250px;
+    left: -100px;
+    animation: moveCloud 10s linear infinite;
+  }
+  .cloud2::before, .cloud2::after {
+    content: '';
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+  }
+  .cloud2::before { width: 70px; height: 35px; top: -15px; left: 15px;}
+  .cloud2::after { width: 50px; height: 25px; top: 5px; left: 50px;}
+
+  @keyframes moveCloud {
+    0% { left: -200px; }
+    100% { left: 100%; }
+  }
+
+  /* Casita de perro caricaturesca (tipo Snoopy) */
+  .house {
+    position: absolute;
+    bottom: -18px;          /* apoyada en el piso (top del ground) */
+    right: 50px;
+    width: 170px;          /* más pequeña */
+    height: 360px;         /* proporcional a la reducción */
+    filter: drop-shadow(0 10px 0 rgba(0,0,0,0.2));
+  }
+
+  /* Techo plano con ligera perspectiva (estilo Snoopy) */
+  .roof {
+    position: absolute;
+    top: -68px;             /* ajustado a la nueva escala */
+    left: -15px;            /* centrado con paredes de 270px vs techo 315px */
+    width: 315px;           /* 420px -> 315px (75%) */
+    height: 90px;           /* 120px -> 90px (75%) */
+    background: #ff2d2d;
+    border: 8px solid #111;
+    border-bottom: 12px solid #d11f1f;
+    transform: skewX(-5deg);
+    box-shadow: 0 8px 0 #9c1414;
+    z-index: 2;
+  }
+  /* línea de listón del techo */
+  .roof::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: 46px;
+    height: 6px;
+    background: #111;
+    opacity: 0.9;
+  }
+  /* pequeño labio frontal del techo */
+  .roof::after {
+    content: '';
+    position: absolute;
+    left: -8px;
+    right: -8px;
+    bottom: -12px;
+    height: 12px;
+    background: #d11f1f;
+    border: 5px solid #111;
+    box-shadow: 0 2px 0 #8f0f0f;
+  }
+
+  .walls {
+    width: 270px;           /* 360px -> 270px */
+    height: 270px;          /* 360px -> 270px */
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.15) 0 2px,
+        transparent 2px 44px
+      ),
+      linear-gradient(#ff3b3b, #ff3b3b); /* rojo plano con líneas finas */
+    position: relative;
+    top: 0;
+    border: 8px solid #111;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    box-shadow: 0 6px 0 #d11f1f;
+  }
+
+  .walls::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;   /* 160px -> 120px */
+    height: 150px;  /* 200px -> 150px */
+    background: #1a1a1a;
+    border: 8px solid #111; /* contorno grueso caricaturesco */
+    border-radius: 120px 120px 0 0 / 150px 150px 0 0; /* arco escalado */
+    box-shadow: 0 -6px 0 rgba(0,0,0,0.18) inset;
+  }
+
+  .ground {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    background: #7cfc00;
+    border-top: 4px solid #32cd32;
+    z-index: 2; /* por encima del SVG decorativo */
+  }
+
+  /* (Revertido) la casa conserva su apilado original */
+  /* .house { z-index: 3; } */
+
+  /* SVG decorativo a la izquierda que “calza” con la casa */
+  .left-svg {
+    position: absolute;
+    left: 0;
+    bottom: 50px;                  /* inicia exactamente donde comienza el piso (top del ground) */
+    transform: none;               /* sin desplazamiento extra */
+    width: min(70vw, 780px);       /* más grande */
+    max-height: calc(100% - 50px); /* respeta la altura por encima del suelo */
+    pointer-events: none;          /* no bloquea interacciones */
+    z-index: 1;                    /* detrás de piso/casa */
+    overflow: hidden;
+    animation: svgFloat 6s ease-in-out infinite alternate, svgSway 9s ease-in-out infinite alternate;
+  }
+  .left-svg svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,.06));
+    opacity: 0.98;
+  }
+  .left-svg path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  @keyframes svgFloat {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+  }
+
+  @keyframes svgSway {
+    0% { transform: translateX(0) rotate(0deg); }
+    100% { transform: translateX(4px) rotate(3deg); }
+  }
+
+  @keyframes draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .left-svg {
+      animation: none;
+    }
+  }
+
+  .left-svg:hover {
+    animation-play-state: paused;
+  }
+
+  /* Ajustes responsivos (opcional) */
+  @media (max-width: 1200px) {
+    .left-svg { width: min(100vw, 720px); }
+  }
+  @media (max-width: 992px) {
+    .left-svg { width: min(100vw, 680px); }
+  }
+  @media (max-width: 768px) {
+    .left-svg { width: min(100vw, 620px); }
+  }
+  @media (max-width: 576px) {
+    .left-svg { width: min(100vw, 560px); }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="sun"></div>
+
+<div class="cloud cloud1"></div>
+<div class="cloud cloud2"></div>
+
+<!-- SVG decorativo a la izquierda -->
+<div class="left-svg" aria-hidden="true">
+  <img src="Vector.svg" alt="">
+</div>
+
+<div class="house">
+  <div class="roof"></div>
+  <div class="walls"></div>
+</div>
+
+<div class="ground"></div>
+
+</body>
+</html>
