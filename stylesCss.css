@@ -1,1 +1,281 @@
+/* ...existing code... */
 
+/* Clase para ocultar secciones */
+.hidden {
+    display: none !important;
+}
+
+
+/* Asegura que la portada ocupe toda la pantalla */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.portada {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-image: url('images/portada.svg'); /* Usamos el SVG como fondo */
+    background-size: contain; /* Por defecto, la imagen es visible sin cortarse */
+    background-position: center; /* Centra la imagen */
+    display: flex; /* Activamos Flexbox para alinear a sus hijos */
+    flex-direction: column; /* Esto apila los elementos hijos verticalmente */
+    align-items: center; /* Centra a los hijos horizontalmente */
+    padding: 1rem; /* Añadimos un padding general para que los elementos no se peguen a los bordes */
+    box-sizing: border-box; /* Asegura que el padding no aumente el tamaño total */
+}
+
+
+
+
+.portada .flecha {
+    margin-top: auto; /* ¡Esta es la clave! Empuja la flecha hacia abajo */
+    display: flex; /* Lo convertimos en un contenedor flex */
+    flex-direction: column; /* Apilamos sus hijos verticalmente */
+    align-items: center; /* Centramos sus hijos (el texto y la imagen) horizontalmente */
+    text-align: center;
+}
+
+.portada .flecha img {
+    width: clamp(100px, 8vw, 120px); /* Se adapta entre 40px y 80px, usando 8vw */
+    height: clamp(100px, 8vw, 120px);
+    display: block; /* Elimina el espacio extra debajo de la imagen */
+    /* Animación de rebote sutil para la flecha */
+    animation: bounce 2s ease-in-out infinite;
+}
+
+.portada .texto {
+    /* Centramos el texto h3 que está dentro */
+    text-align: center;
+}
+
+.portada .flecha p {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 10px double #4999be;
+    border-radius: 7px;
+    margin: 0;
+    color: #021a27;
+    font-family: 'Patrick Hand', cursive; /* Nueva tipografía */
+    font-size: clamp(2rem, 2vw, 3rem); /* se adapta a distintas resoluciones */
+    padding: 1rem; /* Espacio interno para que el texto no se pegue al borde */
+    /* Animación de escritura */
+    overflow: hidden;
+    white-space: nowrap;
+    width: 11ch; /* Ancho basado en el número de caracteres de "Abrir carta" */
+    margin-bottom: 1rem; /* Espacio entre el texto y la flecha */
+    animation: typing 2s steps(25);
+}
+
+
+
+
+.portada .texto h3 {
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo negro semitransparente */
+    border: 10px double rgb(71, 47, 47); /* Borde doble (especificando color) */
+    border-radius: 7px;
+    margin: 0;
+    color: black; /* Color de texto negro */
+    font-family: 'Patrick Hand', cursive; /* Nueva tipografía */
+    font-size: clamp(1.2rem, 4vw, 3rem); /* se adapta a distintas resoluciones */
+    padding: 1rem; /* Espacio interno para que el texto no se pegue al borde */
+    /* Animación de escritura */
+    overflow: hidden; /* Oculta el texto que aún no se ha "escrito" */
+    white-space: nowrap; /* Mantiene el texto en una sola línea */
+    width: 25ch; /* Ancho basado en el número de caracteres de la frase */
+    animation: typing 3s steps(25);
+}
+
+/* --- Estilos de la Sección de Celebración --- */
+
+#celebracion-section {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinea el contenido arriba para permitir el scroll */
+    width: 100vw;
+    height: 100vh;
+    background-color: #ffb6c1; /* Rojo pastel (LightPink) */
+    padding: 2rem;
+    box-sizing: border-box;
+    position: relative;
+    overflow-y: auto; /* Permite el scroll vertical si el contenido no cabe */
+}
+
+#hearts-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Detrás del contenido */
+}
+
+.celebracion-contenido {
+    position: relative;
+    z-index: 2; /* Delante del canvas */
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 2rem;
+    margin: auto 0; /* Centra verticalmente si hay espacio, si no, permite scroll */
+    border-radius: 15px;
+    max-width: 500px;
+    font-family: 'Patrick Hand', cursive;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    color: #333;
+}
+
+.celebracion-contenido img {
+    max-width: 80%; /* Asegura que el GIF no sea más ancho que el contenedor */
+    height: auto; /* Mantiene la proporción del GIF */
+    margin-bottom: 1rem;
+}
+
+.whatsapp-btn {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.8rem 1.5rem;
+    background-color: #25D366; /* Color oficial de WhatsApp */
+    color: white;
+    text-decoration: none;
+    border-radius: 25px; /* Bordes redondeados */
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.whatsapp-btn span {
+    display: inline-block; /* Necesario para que la transformación funcione */
+    transition: transform 0.3s ease;
+}
+
+.whatsapp-btn:hover span {
+    transform: rotate(20deg) scale(1.1); /* Gira y agranda el ícono */
+}
+
+/* --- Estilos de la Sección de la Carta --- */
+
+#carta-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #fde9a3; /* Un fondo cálido */
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+.carta {
+    background-color: #fff;
+    padding: 2rem 3rem;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    width: 100%;
+    font-family: 'Patrick Hand', cursive;
+    color: #333;
+    text-align: center;
+}
+
+.carta h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: #E53935; /* Un rojo similar al de la casita de Snoopy */
+    margin-top: 0;
+}
+
+.carta p {
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    line-height: 1.6;
+}
+
+.pregunta-final {
+    font-weight: bold;
+    font-size: clamp(1.5rem, 3vw, 2rem) !important;
+    color: #d32f2f;
+    margin-top: 2rem;
+}
+
+.opciones {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.opciones button {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.2rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    border: 2px solid #021a27;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#btn-si {
+    background-color: #a5d6a7; /* Verde suave */
+}
+
+#btn-no {
+    background-color: #ef9a9a; /* Rojo suave */
+}
+
+/* Keyframes para la animación de escritura */
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+/* Keyframes para el cursor parpadeante */
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: #021a27; }
+}
+
+/* Keyframes para la animación de rebote de la flecha */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-20px); }
+    60% { transform: translateY(-10px); }
+}
+
+/* Keyframes para las transiciones de escena */
+@keyframes pop-out {
+    from {
+        transform: scale(1);
+        opacity: 1;
+    }
+    to {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+}
+
+.pop-out {
+    animation: pop-out 0.5s ease-in-out forwards;
+}
+
+@keyframes pop-in {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.pop-in {
+    animation: pop-in 0.5s ease-in-out forwards;
+}
+
+/* Para pantallas verticales (móviles), usamos 'cover' para una experiencia más inmersiva,
+   ya que en esta orientación el recorte no afecta a las partes importantes. */
+@media (orientation: portrait) and (max-width: 768px) {
+    .portada {
+        background-size: cover;
+    }
+}
