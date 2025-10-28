@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <!-- Círculos (doble) -->
+  <circle cx="60" cy="60" r="52" fill="none" stroke="#57A1C2" stroke-width="4"/>
+  <circle cx="60" cy="60" r="40" fill="white" stroke="#57A1C2" stroke-width="2"/>
+
+  <!-- Flecha hacia abajo -->
+  <g fill="none" stroke="#57A1C2" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M60 36 L60 72"/>
+    <path d="M46 66 L60 80 L74 66"/>
+  </g>
+</svg>
+
