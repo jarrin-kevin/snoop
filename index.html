@@ -1,3 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Práctica: Unidades CSS</title>
+    <link rel="stylesheet" href="stylesCss.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+</head>
 
+<body> 
+
+    <section class="portada">
+        <div class="texto">
+            <h3>"Ya sabes que es esto..."</h3> 
+        </div>
+        <div class="flecha" id="abrir-carta-btn">
+            <p> Abrir carta</p>
+            <img src="images/flecha hacia abajo.svg" alt="Flecha hacia abajo">
+        </div>
+        
+    </section>
+
+    <section id="carta-section" class="hidden">
+        <div class="carta">
+            <h1>¡Hola!</h1>
+            <p>Ok, vamos al grano. Ya que insististe en abrir esto, supongo que estás lista para lo que viene.</p>
+            <p>No voy a negar que las cosas son... interesantes cuando estás cerca. Digamos que has pasado el período de prueba con honores.</p>
+            <p>Y como soy una persona generosa, he decidido que es momento de hacer esto oficial. Así que, con la aprobación de Snoopy (que es un experto), la pregunta es obvia:</p>
+            <p class="pregunta-final">¿Quieres ser mi novia?</p>
+            <div class="opciones">
+                <button id="btn-si">¡Sí, quiero!</button>
+                <button id="btn-no">¡Obvio que si quieres!</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="celebracion-section" class="hidden">
+        <canvas id="hearts-canvas"></canvas>
+        <div class="celebracion-contenido">
+            <!-- Asumiré que el GIF está en la carpeta 'images' -->
+            <img src="video/GIFsnoopy.gif" alt="Snoopy celebrando">
+            <p>“El Beagle más cool del mundo lo sabía. Ademas es obvio que ibas decir que si, mi encanto es irresistible.”</p>
+            <a href="https://wa.me/593982509770?text=Sab%C3%ADa%20que%20no%20te%20pod%C3%ADas%20resistir.%20%F0%9F%98%98" class="whatsapp-btn" target="_blank" rel="noopener noreferrer">
+                <span>💬</span>
+                Escríbeme por WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <script>
+        const abrirCartaBtn = document.getElementById('abrir-carta-btn');
+        const portadaSection = document.querySelector('.portada');
+        const cartaSection = document.getElementById('carta-section');
+        const celebracionSection = document.getElementById('celebracion-section');
+        const btnSi = document.getElementById('btn-si');
+        const btnNo = document.getElementById('btn-no');
+
+        abrirCartaBtn.addEventListener('click', () => {
+            // Añade la clase para la animación de salida
+            portadaSection.classList.add('pop-out');
+
+            // Escucha el final de la animación de la portada
+            portadaSection.addEventListener('animationend', () => {
+                // Oculta la portada y muestra la carta
+                portadaSection.classList.add('hidden');
+                cartaSection.classList.remove('hidden');
+                cartaSection.classList.add('pop-in');
+            }, { once: true }); // El evento solo se escuchará una vez
+        });
+
+        function mostrarCelebracion() {
+            cartaSection.classList.remove('pop-in'); // Prepara para la nueva animación
+            cartaSection.classList.add('pop-out');
+
+            cartaSection.addEventListener('animationend', () => {
+                cartaSection.classList.add('hidden');
+                celebracionSection.classList.remove('hidden');
+                celebracionSection.classList.add('pop-in');
+                iniciarLluviaDeCorazones();
+            }, { once: true });
+        }
+
+        btnSi.addEventListener('click', mostrarCelebracion);
+        btnNo.addEventListener('click', mostrarCelebracion);
+
+
+        // --- Script para la lluvia de corazones en el Canvas ---
+        function iniciarLluviaDeCorazones() {
+            const canvas = document.getElementById('hearts-canvas');
+            const ctx = canvas.getContext('2d');
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            let hearts = [];
+            const heartCount = 100;
+
+            function createHeart() {
+                return {
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * -canvas.height, // Empieza fuera de la pantalla
+                    size: Math.random() * 20 + 10, // Tamaño entre 10 y 30
+                    speed: Math.random() * 3 + 1, // Velocidad entre 1 y 4
+                    opacity: Math.random() * 0.5 + 0.5 // Opacidad entre 0.5 y 1.0
+                };
+            }
+
+            for (let i = 0; i < heartCount; i++) {
+                hearts.push(createHeart());
+            }
+
+            function drawHeart(x, y, size, opacity) {
+                ctx.fillStyle = `rgba(255, 105, 180, ${opacity})`; // Color rosa con opacidad
+                ctx.beginPath();
+                const topCurveHeight = size * 0.3;
+                ctx.moveTo(x, y + topCurveHeight);
+                // Curvas superiores
+                ctx.bezierCurveTo(x, y, x - size / 2, y, x - size / 2, y + topCurveHeight);
+                ctx.bezierCurveTo(x - size / 2, y + (size + topCurveHeight) / 2, x, y + (size + topCurveHeight) / 2, x, y + size);
+                ctx.bezierCurveTo(x, y + (size + topCurveHeight) / 2, x + size / 2, y + (size + topCurveHeight) / 2, x + size / 2, y + topCurveHeight);
+                ctx.bezierCurveTo(x + size / 2, y, x, y, x, y + topCurveHeight);
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                hearts.forEach(heart => {
+                    heart.y += heart.speed;
+                    if (heart.y > canvas.height) {
+                        // Reinicia el corazón cuando sale de la pantalla
+                        Object.assign(heart, createHeart(), { y: -20 });
+                    }
+                    drawHeart(heart.x, heart.y, heart.size, heart.opacity);
+                });
+
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        }
+    </script>
+
+</body>  
+</html>
 
 
